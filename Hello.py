@@ -1,4 +1,46 @@
-# Copyright (c) Streamlit Inc. (2018-2022) Snowflake Inc. (2022)
+import streamlit as st
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load diabetes dataset
+@st.cache
+def load_data():
+    diabetes_df = pd.read_csv('diabetes.csv')
+    return diabetes_df
+
+# Display data using seaborn and matplotlib
+def display_data_visualization(data):
+    st.subheader("Data Visualization")
+    
+    # Pair plot using seaborn
+    st.write("### Pair Plot")
+    sns.pairplot(data, hue='Outcome')
+    st.pyplot()
+
+    # Correlation matrix heatmap
+    st.write("### Correlation Matrix Heatmap")
+    correlation_matrix = data.corr()
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+    st.pyplot()
+
+# Main function
+def main():
+    st.title("Diabetes Dataset Visualization")
+    
+    # Load data
+    diabetes_data = load_data()
+    
+    # Display data
+    st.write("### Displaying Data")
+    st.write(diabetes_data)
+    
+    # Display data visualization
+    display_data_visualization(diabetes_data)
+
+if __name__ == '__main__':
+    main()
+    # Copyright (c) Streamlit Inc. (2018-2022) Snowflake Inc. (2022)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
